@@ -75,5 +75,5 @@ def main(page: ft.Page):
         contenido
     )
 
-# PARA DESPLIEGUE EN RENDER.COM: usar puerto 8080
-ft.app(target=main, port=8080)
+# PARA DESPLIEGUE EN RENDER.COM: usar puert
+ft.app(target=main, view=ft.WEB_BROWSER)
