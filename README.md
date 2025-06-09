@@ -1,13 +1,14 @@
-# Calculadora con Flet
+# Calculadora Flet
 
-Una calculadora básica hecha con [Flet](https://flet.dev) en Python.
+Una calculadora simple construida con Flet y Python.
 
 ## Requisitos
 
 - Python 3.8+
 - Flet
 
-## Instalación
+## Ejecución
 
 ```bash
 pip install -r requirements.txt
+python main.py

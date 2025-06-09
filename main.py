@@ -1,52 +1,61 @@
 import flet as ft
 
 def main(page: ft.Page):
-    page.title = "Calculadora Flet"
-    page.theme_mode = "light"
-
+    page.title = "Calculadora Simple"
+    page.theme_mode = ft.ThemeMode.LIGHT
     result = ft.Text(value="0", size=32)
 
     current_input = ""
 
+    def update_result():
+        result.value = current_input if current_input else "0"
+        page.update()
+
     def button_click(e):
         nonlocal current_input
-        value = e.control.text
+        data = e.control.data
 
-        if value == "C":
-            current_input = ""
-            result.value = "0"
-        elif value == "=":
+        if data == "=":
             try:
                 current_input = str(eval(current_input))
-                result.value = current_input
             except:
-                result.value = "Error"
-                current_input = ""
+                current_input = "Error"
+        elif data == "C":
+            current_input = ""
         else:
-            current_input += value
-            result.value = current_input
-
-        page.update()
+            current_input += data
+        update_result()
 
     buttons = [
         ["7", "8", "9", "/"],
         ["4", "5", "6", "*"],
         ["1", "2", "3", "-"],
-        ["C", "0", "=", "+"]
+        ["0", ".", "=", "+"],
+        ["C"]
     ]
 
-    layout = [
-        ft.Row([result], alignment="center")
-    ]
-
+    controls = []
     for row in buttons:
-        layout.append(
+        controls.append(
             ft.Row(
-                [ft.ElevatedButton(text=txt, width=70, on_click=button_click) for txt in row],
-                alignment="center"
+                controls=[
+                    ft.ElevatedButton(text=btn, data=btn, on_click=button_click, width=70)
+                    for btn in row
+                ],
+                alignment=ft.MainAxisAlignment.CENTER,
             )
         )
 
-    page.add(*layout)
+    page.add(
+        ft.Column(
+            [
+                result,
+                ft.Divider(),
+                *controls
+            ],
+            alignment=ft.MainAxisAlignment.CENTER,
+            horizontal_alignment=ft.CrossAxisAlignment.CENTER
+        )
+    )
 
 ft.app(target=main)
